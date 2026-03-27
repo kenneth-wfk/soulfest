@@ -1,0 +1,29 @@
+{
+  "name": "soulfest-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "build:public": "turbo build --filter=public-site",
+    "build:admin": "turbo build --filter=admin-portal",
+    "build:ticketing": "turbo build --filter=ticketing-app",
+    "dev": "turbo dev",
+    "dev:public": "turbo dev --filter=public-site",
+    "dev:admin": "turbo dev --filter=admin-portal",
+    "dev:ticketing": "turbo dev --filter=ticketing-app",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "turbo": "latest",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "npm@10.2.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
