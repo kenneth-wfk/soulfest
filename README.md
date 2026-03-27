@@ -14,8 +14,10 @@ This repository uses **npm workspaces** and **Turborepo** to tightly integrate t
 
 ### Shared Packages (`packages/`)
 
-- `@soulfest/ui-core`: The shared, highly polished UI library built over **Tailwind CSS**, **shadcn/ui**, and **Framer Motion**. It enforces a consistent vibrant and glassmorphic aesthetic.
-- `@soulfest/core-logic`: Shared business logic layer containing the initialized **Appwrite** API clients for database and authentication integration.
+- `@soulfest/ui-core`: The shared UI library built over **Tailwind CSS** and **shadcn/ui** and **Framer Motion**. It enforces a consistent vibrant and glassmorphic aesthetic. Contains:
+  - `BottomNavigation` — Generic, prop-driven sticky bottom tab bar (used by `ticketing-app`).
+  - `utils` — `cn()` helper for merging Tailwind classes.
+- `@soulfest/core-logic`: Shared business logic layer containing the initialized **Appwrite** API clients for database and authentication integration (pending live credentials).
 
 ---
 
@@ -53,10 +55,10 @@ npm run dev
 
 By default, Turborepo will start:
 
-- `public-site` on `http://localhost:3000`
-- `admin-portal` on `http://localhost:3001`
-- `ticketing-app` on `http://localhost:3002`
-  _(Ports may vary if already in use)._
+- `api-server` on `http://localhost:4000`
+- `public-site` on `http://localhost:4001`
+- `ticketing-app` on `http://localhost:4002`
+- `admin-portal` on `http://localhost:4003`
 
 #### Running a Single App
 
@@ -68,6 +70,8 @@ npm run dev:public
 npm run dev:admin
 # or
 npm run dev:ticketing
+# or
+npm run dev:api
 ```
 
 ---

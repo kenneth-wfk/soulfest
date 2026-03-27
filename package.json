@@ -7,10 +7,12 @@
     "build:public": "turbo build --filter=public-site",
     "build:admin": "turbo build --filter=admin-portal",
     "build:ticketing": "turbo build --filter=ticketing-app",
+    "build:api": "turbo build --filter=api-server",
     "dev": "turbo dev",
     "dev:public": "turbo dev --filter=public-site",
     "dev:admin": "turbo dev --filter=admin-portal",
     "dev:ticketing": "turbo dev --filter=ticketing-app",
+    "dev:api": "turbo dev --filter=api-server",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

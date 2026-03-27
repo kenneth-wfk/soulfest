@@ -11,15 +11,37 @@ Soulfest is a music festival platform encompassing a public site, a ticketing sy
 - **Payments**: Initial support for manual bank slip uploads, to be transitioned to Stripe/eGHL later.
 
 ## Important Notes for AI Agents
-- Always maintain vibrant, festival-appropriate aesthetics.
-- Animations and transitions should be fluid but not overwhelming (glassmorphism/blur effects, hover states).
-- Shared React/Tailwind/shadcn logic resides in `packages/ui-core`.
-- Shared Appwrite database client logic resides in `packages/core-logic`.
+- **Aesthetics & Branding:** The event is the "Kampar Heritage and Music Festival". Maintain a light, bright, vibrant community aesthetic (Sky Blue, Sunshine Yellow, Playful Pink). Avoid dark, aggressive, "corporate" or "underground techno" themes.
+- Animations and transitions should be fluid but not overwhelming (light frosted glassmorphism, sunny gradients).
+- **Maximum Reusability:** Every shared UI component, utility function, and Tailwind configuration must reside in `packages/ui-core`. Do not duplicate component logic across the apps.
+- **Shared Logic:** Database clients, API fetchers, and complex business logic must be centralized in `packages/core-logic`.
+- **Environment Driven Configuration:** No hardcoded URLs, ports, secrets, or API tokens. Everything configurable MUST be extracted to `.env.local` and `.env.example`. Next.js frontend variables should be prefixed with `NEXT_PUBLIC_`.
+
+## Port Configuration
+- `api-server`: `:4000`
+- `public-site`: `:4001`
+- `ticketing-app`: `:4002`
+- `admin-portal`: `:4003`
+- All ports are configurable via the `.env` file. Do NOT hardcode them.
+- `ALLOWED_ORIGINS` must be set — the api-server will throw a fatal error if missing (fail-fast pattern).
+
+## Shared Components in `@soulfest/ui-core`
+- `BottomNavigation`: Generic tab-based bottom nav. Accepts `tabs: NavTab[]`, `activeTabId`, `onTabChange`, and optional `maxWidth`. Used by `ticketing-app`. Must be the only implementation for any future app that needs a bottom nav.
+- Import with: `import { BottomNavigation, NavTab } from '@soulfest/ui-core'`
+
+## App-Specific Notes
+- **`ticketing-app`**: Mobile-first app shell. Container is `max-w-[768px]` (tablet portrait). Uses `BottomNavigation` from `@soulfest/ui-core`. Has 3 tabs: Tickets (QR), History, Profile.
+- **`admin-portal`**: Dark blue/slate professional theme. Key feature: bank slip verification queue with Approve/Reject actions.
+- **`public-site`**: Light, vibrant Kampar Heritage branding (Sky Blue, Sunshine Yellow, Playful Pink). Glassmorphic hero. Fonts served locally via `next/font/google`.
 
 ## Progress Log
-- **[Init]**: Monorepo workspace (Turborepo + NPM) configured. AI memory context `.agent` established.
-- **[Apps Scaffolded]**: `public-site`, `admin-portal`, and `ticketing-app` Next.js apps fully scaffolded.
-- **[Packages Scaffolded]**: `ui-core` (Tailwind preset, shadcn utils) and `core-logic` (Appwrite clients) created and linked via `npm install`.
-- **[Dev Environment]**: Root `README.md` updated, Turborepo helper scripts added to `package.json`, and `.env.example` boilerplate generated.
-- **[Phase 1 Complete - Commit Checkpoint]**: The monorepo architecture is fully established and ready for an initial git commit.
-- **[Next - Phase 2]**: Await Appwrite credentials to initialize the database connections and begin building out the API schemas and user interfaces.
+- **[Init]**: Monorepo workspace (Turborepo + NPM) configured.
+- **[Apps Scaffolded]**: `public-site`, `admin-portal`, `ticketing-app` Next.js apps fully scaffolded.
+- **[Packages Scaffolded]**: `ui-core` and `core-logic` created and linked.
+- **[Dev Environment]**: README, Turborepo scripts, and `.env.example` finalized.
+- **[UI Mocks Complete]**: All three apps have full mocked UIs.
+  - `public-site`: Hero + newsfeed, bright heritage theme.
+  - `ticketing-app`: Mobile app shell with Tickets/History/Profile tabs + bank slip upload flow.
+  - `admin-portal`: Dark dashboard with bank slip verification queue table.
+- **[ui-core BottomNavigation]**: Generic `BottomNavigation` component extracted from ticketing-app into `packages/ui-core`. Old local component deleted.
+- **[Next - Phase 4]**: Await Appwrite credentials to initialize DB schemas and replace mock arrays with live SDK data.
